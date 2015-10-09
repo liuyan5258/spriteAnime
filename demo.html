@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>spriteAnimate demo</title>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <style>
+  .char-walk {
+    display:block;
+    position: absolute;
+    width: 22px;
+    height: 33px;
+  }
+
+  .char-walk.yel {
+    background: url(images/char-walk_yel.png) 0 0 no-repeat;
+  }
+
+  .char-boy {
+    display:block;
+    position: absolute;
+    top: 50px;
+    width: 19px;
+    height: 30px;
+  }
+
+  .char-boy.yel2 {
+    background: url(images/sprite.png) 0 0 no-repeat;
+  }
+  </style>
+</head>
+<body>
+  <!-- 竖排雪碧图 -->
+  <div class="char-walk yel" id="char-walk_yel"></div>
+  <!-- 横排雪碧图 -->
+  <!-- 这里我懒了下，没选一张好图，实际应该选单个小图宽度一样的雪碧图 -->
+  <div class="char-boy yel2 heng" id="char-boy_yel2"></div>
+  <script src="js/spriteAnimate.js"></script>
+  <script>
+  (function(){
+    var $charWalkYel = $('#char-walk_yel'),
+        $charBoyYel = $('#char-boy_yel2');
+    var i = 1;//测试，1为竖排雪碧图动画，非1为横排雪碧图动画
+    if(i == 1){
+      var autoPlyaJump = function(){
+
+        $charWalkYel.spriteAnime({ frameHeight: 34 });
+
+        var autoPlayWalkYel = function() {
+          $charWalkYel.animate({left: '100%'}, 100000, 'linear', function() {
+            $(this).css('left', '-22px');
+            autoPlayWalkYel();
+          });
+        };
+
+        autoPlayWalkYel();
+      };
+      autoPlyaJump();
+
+    }else {
+      var autoPlyaBoy = function() {
+        $charBoyYel.spriteAnime({ frameHeight: 19});
+
+        var autoPlyaYel = function() {
+          $charBoyYel.animate({left: '100%'}, 100000, 'linear', function(){
+            $(this).css('left', '19px');
+            autoPlyaYel();
+          });
+        };
+
+        autoPlyaYel();      
+      };
+
+      autoPlyaBoy();
+    }
+ 
+  })()
+  </script>
+</body>
+</html>
